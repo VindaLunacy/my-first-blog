@@ -4,6 +4,7 @@ from .models import Post
 from django.shortcuts import render, get_object_or_404
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
 def post_list(request):
 	posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -71,3 +72,6 @@ def post_remove(request, pk):
     post.delete()
     return redirect('post_list')
 
+def logout_view(request):
+    logout(request)
+    return redirect('login')
